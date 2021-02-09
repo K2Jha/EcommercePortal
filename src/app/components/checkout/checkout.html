@@ -1,8 +1,16 @@
 <navigation-bar></navigation-bar>
 
 <body ng-init="vm.getAllProducts()">
-    <div class="header">home</div>
-    <button type="button" ng-click="vm.goToCart()" class="btn btn-secondary btn-lg">Proceed to Pay</button><span>{{vm.totalAmount}}</span>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <button type="button" ng-click="vm.goToCart()" class="btn btn-secondary btn-lg">Proceed to Pay</button>
+            </div>
+            <div class="col=lg-6 mb-4">
+                <span style="float:right;font-size:larger">{{vm.totalAmount}}</span>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-4" ng-repeat="data in vm.finalProducts track by $index">

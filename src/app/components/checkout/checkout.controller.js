@@ -15,17 +15,28 @@ class CheckOutController {
         this.products = [];
         this.cartProducts = [];
         this.ngRedux = $ngRedux;
+        this.totalAmount = 0;
         let { unsubscribe } = this.ngRedux.connect(
             this.mapStateToThis,
             getProducts
         )(this);
         $scope.$on("$destroy", unsubscribe);
+        this.totalAmount = parseInt(
+            this.calculateTotalAmount(this.finalProducts)
+        );
     }
 
     mapStateToThis(state) {
         return {
             finalProducts: state.cartReducer,
         };
+    }
+    calculateTotalAmount(finalProducts) {
+        let sum = 0;
+        finalProducts.forEach(element => {
+            sum += element.price;
+        });
+        return sum;
     }
 }
 CheckOutController.$inject = ["$state", "$scope", "$rootScope", "$http", "$ngRedux"];
