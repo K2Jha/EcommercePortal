@@ -1,0 +1,23 @@
+<navigation-bar></navigation-bar>
+
+<body ng-init="vm.getAllProducts()">
+    <div class="header">home</div>
+    <button type="button" ng-click="vm.goToCart()" class="btn btn-secondary btn-lg">Go To Cart</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4" ng-repeat="data in vm.products track by $index">
+                <div class="card" style="width: 18rem">
+                    <img class="card-img-top" src={{data.image}} alt="Card image cap">
+                    <h3 class="card-title">{{data.title}}</h3>
+                    <div class="card-body">
+                        <p class="card-text">{{data.description.length>10?data.description.slice(0,40).concat('...'):data.description}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Price&nbsp{{data.price}}</li>
+                        <li class="list-group-item"><button type="button" class="btn btn-primary btn-sm" ng-click="vm.addToCart(data)">Add to Cart</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

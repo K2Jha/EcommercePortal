@@ -1,0 +1,25 @@
+.profile-screen {
+    height: 100px;
+    width: 70px;
+    background-color: rgba(221, 128, 21, 0.822);
+}
+
+.header {
+    align-content: center;
+    font-weight: 200;
+    font-style: oblique;
+}
+
+.products {
+    margin-top: 20%;
+    display: content;
+    height: 80%;
+    width: 60%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+img {
+    height: 119px;
+    width: 279px !important;
+}

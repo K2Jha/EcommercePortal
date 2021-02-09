@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" ng-init="vm.getCartItems">
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+    <a class="navbar-brand">E-Commerce</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item" ui-sref-active='active'>
+                <a class="nav-link" ui-sref="home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" ui-sref-active='active'>
+                <a class="nav-link" ui-sref="cart">Cart</a>
+            </li>
+            <li class="nav-item" ui-sref-active='active'>
+                <a class="nav-link" ui-sref="checkout">Checkout</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" ng-model="searchItem" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search Products</button>
+        </form>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-success my-2 my-sm-0" ng-click="vm.logOut()" type="submit">logout</button>
+        </form>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item" ui-sref-active='active'>
+                <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">{{vm.noOfProducts}}</span>
+                <a class="nav-link" ui-sref="home">cart<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
