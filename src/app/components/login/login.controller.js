@@ -2,6 +2,7 @@ import {
     getProducts,
     addToCart,
     removeFromCart,
+    fetchProducts,
 } from "../../actions/cart.action";
 class LoginCtrl {
     constructor(
@@ -63,11 +64,7 @@ class LoginCtrl {
             function(response) {
 
                 if (response.success) {
-                    that.SetCredentials(
-                        that.emailInput,
-                        that.passwordInput
-                    );
-                    that.$ngRedux.dispatch({ type: "GET_ALL_PRODUCTS" });
+                    that.SetCredentials(that.emailInput, that.passwordInput);
                     that.$state.go("home");
                 } else {
                     that.error = response.message;

@@ -15,18 +15,16 @@ function removeFromCart(id) {
     }
 }
 
-export const getProducts = () => {
-    console.log("inside middleware");
-    return async function(dispatch) {
-        type: CART.GET_ALL_PRODUCTS
-        const response = await axios.get("https://fakestoreapi.com/products");
-        if (response["success"] == true) {
-            console.log("response", response);
-            return (response["data"]);
-        } else {
-            return (response["error"]);
-        }
+function addToProducts(data) {
+    return {
+        type: CART.ADD_TO_PRODUCTS,
+        payload: data,
     };
-};
+}
+
+export async function fetchProducts(dispatch, getState) {
+    const response = await axios.get("https://fakestoreapi.com/products");
+    dispatch(addToProducts(response.data));
+}
 
 export default { addToCart, removeFromCart };

@@ -18,25 +18,22 @@ class HomeController {
             addToCart
         )(this);
         this.$scope.$on("$destroy", unsubscribe);
-        this.products = this.$ngRedux.getState().productReducer;
+        this.fetchProducts();
     }
 
-    // mapStateToThis(state) {
-    //     return {
-    //         products: state.ProductReducer,
-    //     };
-    // }
-
     addToCart(data) {
-        //console.log("product added", id);
-        //this.cartProducts.push(id);
-        //console.log(this.cartProducts);
         this.$ngRedux.dispatch({ type: "ADD_TO_CART", payload: data });
     }
 
-    getAllProducts() {
-        this.products = that.$ngRedux.getState().productReducer;
-        console.log(this.products);
+    fetchProducts() {
+        let that = this;
+        that.$http
+            .get("https://fakestoreapi.com/products")
+            .then(function(response) {
+                that.products = response.data;
+                // that.$ngRedux.dispatch({ type: "ADD_TO_PRODUCTS", payload: response.data });
+                // console.log(response.data);
+            });
     }
 }
 HomeController.$inject = ["$state", "$scope", "$rootScope", "$http", "$ngRedux"];

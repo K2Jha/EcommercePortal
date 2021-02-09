@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/preboot/angularjs-webpack",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.0",
     "angular": "^1.7.0",
     "angular-ui-router": "^1.0.29",
     "axios": "^0.21.1",
