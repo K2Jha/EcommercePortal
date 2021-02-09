@@ -16,31 +16,29 @@ middlewares.push(thunk);
 middlewares.push(logger);
 angular
     .module("app", [uiRouter, Components, ngRedux, ngCookies])
-    .config(($ngReduxProvider) => {
+    .config($ngReduxProvider => {
         $ngReduxProvider.createStore(() => {
-            return createStore(RootReducer, {}, compose(applyMiddleware(...middlewares)));
+            return createStore(
+                RootReducer, {},
+                compose(applyMiddleware(thunk, ...middlewares))
+            );
         });
     })
     .component("app", AppComponent)
-    // .run([
-    //     "$rootScope",
-    //     "$location",
-    //     "$cookies",
-    //     "$window",
-    //     "$http",
-    //     function($rootScope, $location, $cookies, $window, $http) {
-    //         // keep user logged in after page refresh
-    //         $rootScope.globals = JSON.parse($window.localStorage["globals"] || {});
-    //         if ($rootScope.globals.currentUser) {
-    //             $http.defaults.headers.common["Authorization"] =
-    //                 "Basic " + $rootScope.globals.currentUser.username; // jshint ignore:line
-    //         }
+    .run([
+        "$rootScope",
+        "$location",
+        "$cookies",
+        function($rootScope, $location, $cookies) {
+            let cookie = $cookies.get("globals");
+            if (cookie == null) {
+                $rootScope.globals = {};
+            } else $rootScope.globals = JSON.parse($cookies.get("globals"));
 
-//         $rootScope.$on("$locationChangeStart", function(event, next, current) {
-//             // redirect to login page if not logged in
-//             if ($location.path() !== "/" && !$rootScope.globals.currentUser) {
-//                 $location.path("/");
-//             }
-//         });
-//     },
-// ]);
+            $rootScope.$on("$locationChangeStart", function(event, next, current) {
+                if ($location.path() !== "/" && !$rootScope.globals.currentUser) {
+                    $location.path("login");
+                }
+            });
+        },
+    ]);

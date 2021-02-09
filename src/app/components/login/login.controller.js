@@ -49,8 +49,7 @@ class LoginCtrl {
                 },
             };
 
-            // $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-            this.window.localStorage["globals"] = JSON.stringify($rootScope.globals);
+            this.$cookies.put("globals", JSON.stringify($rootScope.globals));
         }
     }
     logIn() {
