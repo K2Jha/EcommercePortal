@@ -37,7 +37,8 @@ angular
 
             $rootScope.$on("$locationChangeStart", function(event, next, current) {
                 if ($location.path() !== "/" && !$rootScope.globals.currentUser) {
-                    $location.path("login");
+                    event.preventDefault();
+                    $location.path("/");
                 }
             });
         },
