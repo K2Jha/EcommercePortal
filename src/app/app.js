@@ -9,19 +9,38 @@ import { createLogger } from 'redux-logger';
 import ngCookies from "angular-cookies";
 import { RootReducer } from "./reducers";
 import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import './app.css';
 const logger = createLogger({});
 const middlewares = [];
 middlewares.push(thunk);
 middlewares.push(logger);
+
+
+const persistConfig = {
+    key: "root",
+    storage,
+    stateReconciler: autoMergeLevel1,
+};
+const persistedRootReducer = persistReducer(persistConfig, RootReducer);
+
+const configureStore = () => {
+    const store = createStore(
+        persistedRootReducer, {},
+        compose(applyMiddleware(thunk, ...middlewares))
+    );
+    const persistor = persistStore(store);
+
+    return { store, persistor };
+};
 angular
     .module("app", [uiRouter, Components, ngRedux, ngCookies])
     .config($ngReduxProvider => {
         $ngReduxProvider.createStore(() => {
-            return createStore(
-                RootReducer, {},
-                compose(applyMiddleware(thunk, ...middlewares))
-            );
+            let { store } = configureStore();
+            return store;
         });
     })
     .component("app", AppComponent)
