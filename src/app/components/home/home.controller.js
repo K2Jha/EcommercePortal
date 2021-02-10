@@ -1,9 +1,4 @@
-import * as CartActions from '../../actions/cart.action.js'
-import {
-    getProducts,
-    addToCart,
-    removeFromCart,
-} from "../../actions/cart.action";
+import { getNewProducts } from "../../actions/product.action";
 class HomeController {
     constructor($state, $scope, $rootScope, $http, $ngRedux) {
         this.$scope = $scope;
@@ -13,27 +8,23 @@ class HomeController {
         this.products = [];
         this.cartProducts = [];
         this.$ngRedux = $ngRedux;
-        let { unsubscribe } = this.$ngRedux.connect(
-            this.mapStateToThis,
-            addToCart
-        )(this);
+        let { unsubscribe } = this.$ngRedux.connect(this.mapStateToThis)(this);
         this.$scope.$on("$destroy", unsubscribe);
-        this.fetchProducts();
+        this.getProducts();
+    }
+    mapStateToThis(state) {
+        return {
+            products: state.productReducer,
+        };
     }
 
     addToCart(data) {
         this.$ngRedux.dispatch({ type: "ADD_TO_CART", payload: data });
     }
 
-    fetchProducts() {
-        let that = this;
-        that.$http
-            .get("https://fakestoreapi.com/products")
-            .then(function(response) {
-                that.products = response.data;
-                // that.$ngRedux.dispatch({ type: "ADD_TO_PRODUCTS", payload: response.data });
-                // console.log(response.data);
-            });
+    getProducts() {
+        const fetchProducts = getNewProducts();
+        this.$ngRedux.dispatch(fetchProducts);
     }
 }
 HomeController.$inject = ["$state", "$scope", "$rootScope", "$http", "$ngRedux"];

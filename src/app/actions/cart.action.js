@@ -22,9 +22,11 @@ function addToProducts(data) {
     };
 }
 
-export async function fetchProducts(dispatch, getState) {
-    const response = await axios.get("https://fakestoreapi.com/products");
-    dispatch(addToProducts(response.data));
+export function getNewProducts() {
+    return async function fetchProducts(dispatch, getState) {
+        const response = await axios.get("https://fakestoreapi.com/products");
+        dispatch({ type: "ADD_TO_PRODUCTS", payload: response.data });
+    };
 }
 
 export default { addToCart, removeFromCart };
