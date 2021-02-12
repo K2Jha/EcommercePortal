@@ -15,18 +15,20 @@ class LoginCtrl {
         $window,
         $cookies,
         $ngRedux,
+        $location,
     ) {
         this.$scope = $scope;
         this.$state = $state;
         this.$stateParams = $stateParams;
         this.$timeout = $timeout;
-        //this.$rootScope = $rootScope;
+        this.$rootScope = $rootScope;
         this.$http = $http;
         this.loginForm = true;
         this.registration = false;
         this.window = $window;
         this.$cookies = $cookies;
-        this.$ngRedux = $ngRedux
+        this.$ngRedux = $ngRedux;
+        this.$location = $location;
         let { unsubscribe } = this.$ngRedux.connect(
             this.mapStateToThis,
             getProducts,
@@ -50,7 +52,10 @@ class LoginCtrl {
                 },
             };
 
-            this.$cookies.put("globals", JSON.stringify($rootScope.globals));
+            this.window.sessionStorage.setItem(
+                "globals",
+                JSON.stringify($rootScope.globals)
+            );
         }
     }
     logIn() {
@@ -65,7 +70,11 @@ class LoginCtrl {
 
                 if (response.success) {
                     that.SetCredentials(that.emailInput, that.passwordInput);
-                    that.$state.go("home");
+                    if (that.$rootScope.returnToState === "/cart") {
+                        that.$location.path("/cart");
+                    } else if (that.$rootScope.returnToState === "/checkout") {
+                        that.$location.path("/checkout");
+                    } else that.$location.path("/home");
                 } else {
                     that.error = response.message;
                     that.dataLoading = false;
@@ -91,7 +100,7 @@ LoginCtrl.$inject = [
     "$window",
     "$cookies",
     "$ngRedux",
-
+    "$location",
 ];
 
 export default LoginCtrl;

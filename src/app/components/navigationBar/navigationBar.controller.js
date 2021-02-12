@@ -19,7 +19,7 @@ class NavigationController {
     }
     logOut() {
         console.log("logging out");
-        this.$cookies.remove("globals");
+        this.window.localStorage.removeItem("globals");
         this.$state.go("login");
     }
 

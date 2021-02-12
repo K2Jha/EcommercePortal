@@ -47,16 +47,20 @@ angular
     .run([
         "$rootScope",
         "$location",
-        "$cookies",
-        function($rootScope, $location, $cookies) {
-            let cookie = $cookies.get("globals");
+        "$window",
+        function($rootScope, $location, $window) {
+            let cookie = $window.sessionStorage.getItem("globals");
             if (cookie == null) {
                 $rootScope.globals = {};
-            } else $rootScope.globals = JSON.parse($cookies.get("globals"));
+            } else
+                $rootScope.globals = JSON.parse(
+                    $window.localStorage.getItem("globals")
+                );
 
             $rootScope.$on("$locationChangeStart", function(event, next, current) {
                 if ($location.path() !== "/" && !$rootScope.globals.currentUser) {
                     event.preventDefault();
+                    $rootScope.returnToState = $location.path();
                     $location.path("/");
                 }
             });
