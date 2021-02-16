@@ -12,19 +12,21 @@ class HomeController {
         this.$scope.$on("$destroy", unsubscribe);
         this.getProducts();
     }
-    mapStateToThis(state) {
-        return {
-            products: state.productReducer,
-        };
+    $onInit() {
+        this.fetchProducts();
     }
 
     addToCart(data) {
         this.$ngRedux.dispatch({ type: "ADD_TO_CART", payload: data });
     }
 
-    getProducts() {
-        const fetchProducts = getNewProducts();
-        this.$ngRedux.dispatch(fetchProducts);
+    fetchProducts() {
+        let that = this;
+        that.$http
+            .get("https://fakestoreapi.com/products")
+            .then(function(response) {
+                that.products = response.data;
+            });
     }
 }
 HomeController.$inject = ["$state", "$scope", "$rootScope", "$http", "$ngRedux"];
