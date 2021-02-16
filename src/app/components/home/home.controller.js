@@ -1,4 +1,3 @@
-import { getNewProducts } from "../../actions/product.action";
 class HomeController {
     constructor($state, $scope, $rootScope, $http, $ngRedux) {
         this.$scope = $scope;
@@ -10,7 +9,6 @@ class HomeController {
         this.$ngRedux = $ngRedux;
         let { unsubscribe } = this.$ngRedux.connect(this.mapStateToThis)(this);
         this.$scope.$on("$destroy", unsubscribe);
-        this.getProducts();
     }
     $onInit() {
         this.fetchProducts();

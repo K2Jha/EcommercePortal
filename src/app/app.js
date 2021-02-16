@@ -5,8 +5,7 @@ import AppComponent from "./app.component";
 import { createStore, compose, applyMiddleware } from "redux";
 //import backendCallMiddleware from "./middlewares/index"
 import ngRedux from "ng-redux";
-import { createLogger } from 'redux-logger';
-import ngCookies from "angular-cookies";
+import { createLogger } from "redux-logger";
 import { RootReducer } from "./reducers";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
@@ -28,7 +27,7 @@ const persistedRootReducer = persistReducer(persistConfig, RootReducer);
 
 const configureStore = () => {
     const store = createStore(
-        persistedRootReducer, {},
+        persistedRootReducer,
         compose(applyMiddleware(thunk, ...middlewares))
     );
     const persistor = persistStore(store);
@@ -36,7 +35,7 @@ const configureStore = () => {
     return { store, persistor };
 };
 angular
-    .module("app", [uiRouter, Components, ngRedux, ngCookies])
+    .module("app", [uiRouter, Components, ngRedux])
     .config($ngReduxProvider => {
         $ngReduxProvider.createStore(() => {
             let { store } = configureStore();

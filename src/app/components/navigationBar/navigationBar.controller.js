@@ -20,10 +20,9 @@ class NavigationController {
     logOut() {
         console.log("logging out");
         this.window.localStorage.removeItem("globals");
+        this.window.localStorage.removeItem("persist:root");
         this.$state.go("login");
     }
-
-    removeFromCart() {}
 
     proceedToCheckout() {
         this.$state.go("checkout");

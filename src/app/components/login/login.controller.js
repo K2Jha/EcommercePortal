@@ -1,9 +1,3 @@
-import {
-    getProducts,
-    addToCart,
-    removeFromCart,
-    fetchProducts,
-} from "../../actions/cart.action";
 class LoginCtrl {
     constructor(
         $scope,
@@ -13,9 +7,8 @@ class LoginCtrl {
         $rootScope,
         $http,
         $window,
-        $cookies,
         $ngRedux,
-        $location,
+        $location
     ) {
         this.$scope = $scope;
         this.$state = $state;
@@ -26,24 +19,24 @@ class LoginCtrl {
         this.loginForm = true;
         this.registration = false;
         this.window = $window;
-        this.$cookies = $cookies;
         this.$ngRedux = $ngRedux;
         this.$location = $location;
         let { unsubscribe } = this.$ngRedux.connect(
-            this.mapStateToThis,
-            getProducts,
+            this.mapStateToThis
         )(this);
         this.$scope.$on("$destroy", unsubscribe);
 
         this.Login = function(username, password, callback) {
             $timeout(function() {
-                var response = { success: username === "test@g.com" && password === "test" };
+                var response = {
+                    success: username === "test@g.com" && password === "test",
+                };
                 if (!response.success) {
                     return (response.message = "Username or password is incorrect");
                 }
                 return callback(response);
             }, 1000);
-        }
+        };
         this.SetCredentials = function(username, password) {
             $rootScope.globals = {
                 currentUser: {
@@ -56,31 +49,26 @@ class LoginCtrl {
                 "globals",
                 JSON.stringify($rootScope.globals)
             );
-        }
+        };
     }
     logIn() {
         console.log("email", this.emailInput);
         console.log("hgfjhgjfh", this.passwordInput);
         var that = this;
         that.dataLoading = true;
-        that.Login(
-            that.emailInput,
-            that.passwordInput,
-            function(response) {
-
-                if (response.success) {
-                    that.SetCredentials(that.emailInput, that.passwordInput);
-                    if (that.$rootScope.returnToState === "/cart") {
-                        that.$location.path("/cart");
-                    } else if (that.$rootScope.returnToState === "/checkout") {
-                        that.$location.path("/checkout");
-                    } else that.$location.path("/home");
-                } else {
-                    that.error = response.message;
-                    that.dataLoading = false;
-                }
+        that.Login(that.emailInput, that.passwordInput, function(response) {
+            if (response.success) {
+                that.SetCredentials(that.emailInput, that.passwordInput);
+                if (that.$rootScope.returnToState === "/cart") {
+                    that.$location.path("/cart");
+                } else if (that.$rootScope.returnToState === "/checkout") {
+                    that.$location.path("/checkout");
+                } else that.$location.path("/home");
+            } else {
+                that.error = response.message;
+                that.dataLoading = false;
             }
-        );
+        });
     }
     goToRegistration() {
         this.loginForm = false;
@@ -98,7 +86,6 @@ LoginCtrl.$inject = [
     "$rootScope",
     "$http",
     "$window",
-    "$cookies",
     "$ngRedux",
     "$location",
 ];

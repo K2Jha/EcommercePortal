@@ -1,11 +1,3 @@
-import * as CartActions from "../../actions/cart.action.js";
-import {
-    getProducts,
-    addToCart,
-    removeFromCart,
-} from "../../actions/cart.action";
-//import { stateGo } from "redux-ui-router";
-
 class CheckOutController {
     constructor($state, $scope, $rootScope, $http, $ngRedux) {
         this.$scope = $scope;
@@ -17,13 +9,10 @@ class CheckOutController {
         this.ngRedux = $ngRedux;
         this.totalAmount = 0;
         let { unsubscribe } = this.ngRedux.connect(
-            this.mapStateToThis,
-            getProducts
+            this.mapStateToThis
         )(this);
         $scope.$on("$destroy", unsubscribe);
-        this.totalAmount = parseInt(
-            this.calculateTotalAmount(this.finalProducts)
-        );
+        this.totalAmount = (this.calculateTotalAmount(this.finalProducts).toFixed(2));
     }
 
     mapStateToThis(state) {

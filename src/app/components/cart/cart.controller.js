@@ -1,9 +1,3 @@
-import * as CartActions from "../../actions/cart.action.js";
-import {
-    getProducts,
-    addToCart,
-    removeFromCart,
-} from "../../actions/cart.action";
 class CartController {
     constructor($state, $scope, $rootScope, $http, $ngRedux) {
         this.$scope = $scope;
@@ -13,20 +7,15 @@ class CartController {
         this.products = [];
         this.cartProducts = [];
         this.ngRedux = $ngRedux;
-        let { unsubscribe } = this.ngRedux.connect(
-            this.mapStateToThis,
-            removeFromCart
-        )(this);
+        let { unsubscribe } = this.ngRedux.connect(this.mapStateToThis)(this);
         $scope.$on("$destroy", unsubscribe);
+        this.userId = 1;
     }
-
     mapStateToThis(state) {
         return {
-            cartProducts: state.cartReducer
+            cartProducts: state.cartReducer,
         };
     }
-
-    fetchProducts() {}
 
     removeFromCart(id) {
         this.ngRedux.dispatch({ type: "REMOVE_FROM_CART", payload: id });
