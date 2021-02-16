@@ -49,7 +49,7 @@ angular
         "$location",
         "$window",
         function($rootScope, $location, $window) {
-            let cookie = $window.sessionStorage.getItem("globals");
+            let cookie = $window.localStorage.getItem("globals");
             if (cookie == null) {
                 $rootScope.globals = {};
             } else

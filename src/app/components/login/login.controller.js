@@ -52,7 +52,7 @@ class LoginCtrl {
                 },
             };
 
-            this.window.sessionStorage.setItem(
+            this.window.localStorage.setItem(
                 "globals",
                 JSON.stringify($rootScope.globals)
             );
