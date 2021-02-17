@@ -1,3 +1,6 @@
+import { addToCart } from "../../services/cartSlice";
+// import { addToCart } from "./../../actions/cart.action";
+
 class HomeController {
     constructor($state, $scope, $rootScope, $http, $ngRedux) {
         this.$scope = $scope;
@@ -15,7 +18,7 @@ class HomeController {
     }
 
     addToCart(data) {
-        this.$ngRedux.dispatch({ type: "ADD_TO_CART", payload: data });
+        this.$ngRedux.dispatch(addToCart(data));
     }
 
     fetchProducts() {

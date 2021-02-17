@@ -14,13 +14,13 @@ class NavigationController {
     }
     mapStateToThis(state) {
         return {
-            noOfProducts: state.cartReducer.length,
+            noOfProducts: state.cart.length,
         };
     }
     logOut() {
         console.log("logging out");
         this.window.localStorage.removeItem("globals");
-        this.window.localStorage.removeItem("persist:root");
+        this.window.localStorage.removeItem("persist-root");
         this.$state.go("login");
     }
 

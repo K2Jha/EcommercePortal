@@ -1,3 +1,4 @@
+import { removeFromCart } from "./../../services/cartSlice";
 class CartController {
     constructor($state, $scope, $rootScope, $http, $ngRedux) {
         this.$scope = $scope;
@@ -13,12 +14,12 @@ class CartController {
     }
     mapStateToThis(state) {
         return {
-            cartProducts: state.cartReducer,
+            cartProducts: state.cart,
         };
     }
 
     removeFromCart(id) {
-        this.ngRedux.dispatch({ type: "REMOVE_FROM_CART", payload: id });
+        this.ngRedux.dispatch(removeFromCart(id));
     }
 
     proceedToCheckout() {

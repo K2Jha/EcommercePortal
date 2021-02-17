@@ -17,7 +17,7 @@ class CheckOutController {
 
     mapStateToThis(state) {
         return {
-            finalProducts: state.cartReducer,
+            finalProducts: state.cart,
         };
     }
     calculateTotalAmount(finalProducts) {
