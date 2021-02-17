@@ -59,7 +59,7 @@ angular
             $rootScope.$on("$locationChangeStart", function(event, next, current) {
                 if ($location.path() !== "/" && !$rootScope.globals.currentUser) {
                     event.preventDefault();
-                    $rootScope.returnToState = $location.path();
+                    $window.localStorage["lastRoute"] = $location.path();
                     $location.path("/");
                 }
             });
