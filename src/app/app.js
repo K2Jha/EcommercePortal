@@ -10,6 +10,7 @@ import { RootReducer } from "./reducers";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import Storage from "localforage";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import './app.css';
 const logger = createLogger({});
@@ -20,7 +21,7 @@ middlewares.push(logger);
 
 const persistConfig = {
     key: "root",
-    storage,
+    storage: Storage,
     stateReconciler: autoMergeLevel1,
 };
 const persistedRootReducer = persistReducer(persistConfig, RootReducer);
