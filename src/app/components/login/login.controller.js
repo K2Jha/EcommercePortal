@@ -56,12 +56,13 @@ class LoginCtrl {
         console.log("hgfjhgjfh", this.passwordInput);
         var that = this;
         that.dataLoading = true;
+        that.routeTo = this.window.localStorage.getItem("lastRoute");
         that.Login(that.emailInput, that.passwordInput, function(response) {
             if (response.success) {
                 that.SetCredentials(that.emailInput, that.passwordInput);
-                if (that.$rootScope.returnToState === "/cart") {
+                if (that.routeTo === "/cart") {
                     that.$location.path("/cart");
-                } else if (that.$rootScope.returnToState === "/checkout") {
+                } else if (that.routeTo === "/checkout") {
                     that.$location.path("/checkout");
                 } else that.$location.path("/home");
             } else {
